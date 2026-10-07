@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kinder World – Where play begins</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#fff7ea;--plum:#3b1f66;--pink:#ff5d8f;--sun:#ffc93c;--teal:#2ec4b6;--sky:#8fd6ff;
+--bg:#fff7ea;--ink:#3b1f66;--card:#fff;--h1:#8fd6ff;--h2:#fff7ea;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#231344;--ink:#fff3dc;--card:#33205e;--h1:#2a1a5e;--h2:#231344}}
+:root[data-theme="dark"]{--bg:#231344;--ink:#fff3dc;--card:#33205e;--h1:#2a1a5e;--h2:#231344}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 1.05rem/1.55 'Nunito','Trebuchet MS',system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3,.btn,.logo,.mq{font-family:'Fredoka','Trebuchet MS',system-ui,sans-serif}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+/* loader */
+#ld{position:fixed;inset:0;z-index:300;background:var(--pink);display:grid;place-content:center;justify-items:center;gap:18px;color:#fff;font:700 2rem 'Fredoka',sans-serif;transition:transform .9s cubic-bezier(.77,0,.18,1)}
+#ld.go{transform:translateY(-101%)}
+#ld div{display:flex;gap:10px}#ld i{width:34px;height:34px;border-radius:9px;background:var(--sun);animation:hop .7s ease-in-out infinite alternate;animation-delay:calc(var(--k)*.15s)}
+#ld i:nth-child(2){background:var(--teal)}#ld i:nth-child(3){background:var(--sky)}
+@keyframes hop{to{transform:translateY(-26px) rotate(90deg)}}
+/* progress */
+#pg{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);height:12px;z-index:90;background:repeating-linear-gradient(90deg,var(--plum) 0 14px,transparent 14px 22px) bottom/100% 3px no-repeat}
+#pg b{position:absolute;left:0;top:0;height:6px;background:var(--pink);border-radius:0 6px 6px 0;width:0}
+#pg span{position:absolute;top:-8px;left:0;font-size:1.5rem;transform:translateX(-50%) scaleX(-1)}
+nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:80;display:flex;align-items:center;justify-content:space-between;padding:8px 5vw;margin-top:12px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.5rem}
+.logo svg{width:44px;height:44px;animation:wob 3s ease-in-out infinite}
+nav ul{display:flex;gap:24px;list-style:none;font-weight:700}nav ul a:hover{color:var(--pink)}
+@media(max-width:700px){nav ul{display:none}}
+.btn{display:inline-block;border:0;cursor:pointer;font-weight:600;font-size:1.1rem;padding:14px 30px;border-radius:999px;background:var(--pink);color:#fff;box-shadow:0 6px 0 #c9335f;transition:transform .15s,box-shadow .15s;animation:pulse 2.4s infinite}
+.btn:hover{transform:translateY(-3px) scale(1.04)}.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #c9335f}
+.btn.alt{background:var(--sun);color:var(--plum);box-shadow:0 6px 0 #d49d12;animation-delay:.5s}
+@keyframes pulse{0%,100%{filter:none}50%{filter:brightness(1.1) saturate(1.2)}}
+@keyframes wob{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg) scale(1.08)}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-22px) rotate(8deg)}}
+/* hero */
+.hero{position:relative;min-height:100vh;display:grid;place-items:center;text-align:center;padding:40px 6vw 150px;overflow:hidden;background:linear-gradient(180deg,var(--h1),var(--h2) 85%);margin-top:-60px}
+.in{position:relative;z-index:2}
+.hero h1{font-size:clamp(3.6rem,14vw,9rem);line-height:.95;font-weight:700;color:var(--ink);text-shadow:3px 3px 0 var(--pink),6px 6px 0 var(--sun)}
+.hero h1 .d{display:inline-block;animation:drop 1.1s cubic-bezier(.3,1.4,.5,1) both;animation-delay:calc(1.1s + var(--i)*.08s)}
+.hero h1 i{display:inline-block;font-style:normal;transition:transform .3s cubic-bezier(.3,1.8,.5,1)}
+.hero h1 .d:hover i{transform:translateY(-16px) rotate(-12deg) scale(1.15)}
+@keyframes drop{0%{transform:translateY(-130vh) rotate(-60deg)}100%{transform:none}}
+.hero p{font-size:clamp(1.15rem,2.6vw,1.6rem);max-width:30ch;margin:22px auto 32px;font-weight:600;animation:up 1s 2.2s both}
+.hero .acts{animation:up 1s 2.5s both}
+@keyframes up{from{opacity:0;transform:translateY(30px)}}
+.sunw{position:absolute;right:7%;top:8%;width:clamp(90px,16vw,190px);animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cl{position:absolute;font-size:5rem;opacity:.95;animation:drift linear infinite}
+@keyframes drift{from{transform:translateX(-30vw)}to{transform:translateX(130vw)}}
+.fl{position:absolute;font-size:clamp(2.2rem,6vw,4.5rem);will-change:transform;pointer-events:none;z-index:1}
+.fl i{display:block;font-style:normal;animation:bob 4s ease-in-out infinite;animation-delay:var(--d,0s)}
+.hills{position:absolute;left:-5%;bottom:-2px;width:110%;height:34%;will-change:transform;z-index:1}
+.train{position:absolute;bottom:7%;left:0;font-size:3rem;z-index:2;white-space:nowrap;animation:roll 16s linear infinite;transform:scaleX(-1)}
+.train span{display:inline-block;animation:chug .4s infinite alternate}
+@keyframes roll{from{left:-35%}to{left:110%}}
+@keyframes chug{to{transform:translateY(-5px)}}
+.bl{position:absolute;bottom:-90px;z-index:3;background:none;border:0;cursor:pointer;line-height:1;animation:rise linear forwards}
+@keyframes rise{0%{transform:translate(0,0)}25%{transform:translate(26px,calc(var(--h,100vh)*-.3))}50%{transform:translate(-22px,calc(var(--h,100vh)*-.6))}100%{transform:translate(10px,calc(var(--h,100vh)*-1.25))}}
+.cf,.sp{position:fixed;pointer-events:none;z-index:150}
+.cf{font-size:1.6rem}.sp{font-size:1rem}
+/* marquee */
+.mqs{margin:-30px 0 30px;position:relative;z-index:5}
+.mq{overflow:hidden;white-space:nowrap;padding:12px 0;font-size:1.5rem;font-weight:600}
+.mq div{display:inline-block;animation:mq 24s linear infinite}
+.mq.a{background:var(--plum);color:var(--cream);transform:rotate(-2deg) scale(1.05)}
+.mq.b{background:var(--pink);color:#fff;transform:rotate(1.5deg) scale(1.05);margin-top:-6px}
+.mq.b div{animation-direction:reverse}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* sky story */
+.story{height:450vh;position:relative}
+.stage{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center}
+#sun{position:absolute;left:10%;top:12%;font-size:5.5rem}
+#stars{position:absolute;inset:0;opacity:0}
+#stars b{position:absolute;color:var(--sun);font-size:1.4rem;animation:tw 1.6s infinite alternate;animation-delay:var(--d)}
+@keyframes tw{to{opacity:.2;transform:scale(.5) rotate(40deg)}}
+.cloud,.bird{position:absolute;will-change:transform}.cloud{font-size:6rem;opacity:.92}.bird{font-size:2.4rem}
+#bal{position:absolute;left:50%;bottom:0;font-size:min(34vw,13rem);will-change:transform;filter:drop-shadow(0 20px 18px #0003)}
+.cap{position:absolute;left:5vw;right:5vw;top:16%;text-align:center;opacity:0;color:var(--plum)}
+.cap.n{color:var(--cream)}
+.cap h2{font-size:clamp(2.2rem,7vw,4.6rem);line-height:1.05}
+.cap p{font-size:clamp(1.05rem,2.3vw,1.45rem);max-width:34ch;margin:12px auto 0;font-weight:600}
+/* sections */
+.pad{padding:90px 6vw}
+h2.t{font-size:clamp(2.1rem,5.5vw,3.8rem);text-align:center;line-height:1.1;margin-bottom:12px}
+.sub{text-align:center;max-width:44ch;margin:0 auto 46px;font-size:1.15rem;opacity:.85}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;max-width:1100px;margin:auto;perspective:900px}
+.cat{background:var(--c);color:var(--plum);border-radius:36px 36px 64px 36px;padding:34px 22px;text-align:center;opacity:0;transform:scale(.5) rotate(-12deg);transition:transform .8s cubic-bezier(.3,1.7,.5,1),opacity .5s;transition-delay:var(--d,0s);box-shadow:0 10px 0 #0002}
+.cat.in{opacity:1;transform:none}
+.cat em{display:block;font-style:normal;font-size:4.6rem;animation:bob 3.4s ease-in-out infinite;animation-delay:var(--d)}
+.cat h3{font-size:1.6rem;margin-top:6px}.cat p{font-weight:600}
+/* shelf */
+.hpin{height:340vh;position:relative}
+.hst{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;background:var(--sun);color:var(--plum)}
+.hst h2{font-size:clamp(2.1rem,5.5vw,3.8rem);padding:0 6vw 26px;line-height:1.1}
+.track{display:flex;gap:28px;padding:0 6vw;width:max-content;will-change:transform}
+.toy{width:min(72vw,290px);background:var(--cream);color:var(--plum);border-radius:34px;padding:26px;text-align:center;box-shadow:0 10px 0 #0002;will-change:transform}
+.toy em{display:block;font-style:normal;font-size:6rem;animation:bob 3.6s ease-in-out infinite;animation-delay:var(--d)}
+.toy b{display:inline-block;background:var(--teal);color:#fff;border-radius:99px;padding:2px 16px;margin-top:6px}
+.toy h3{margin-top:8px;font-size:1.4rem}
+/* game */
+.game{position:relative;max-width:900px;height:min(62vh,480px);margin:auto;border-radius:44px;overflow:hidden;background:linear-gradient(180deg,var(--sky),var(--cream));border:5px dashed var(--pink)}
+.game .sc{position:absolute;left:0;right:0;top:14px;text-align:center;font:700 1.6rem 'Fredoka',sans-serif;color:var(--plum);z-index:5}
+#msg{min-height:1.6em;text-align:center;font-weight:700;margin-top:16px;color:var(--pink)}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:20px;max-width:1000px;margin:auto;text-align:center}
+.stats div{background:var(--card);border-radius:30px;padding:28px 10px;border:3px dashed var(--teal);font-weight:700}
+.stats strong{display:block;font:700 3.3rem 'Fredoka',sans-serif;color:var(--pink);line-height:1}
+.rev{background:var(--card);border-radius:28px;padding:26px;border-left:12px solid var(--c)}
+.cta{text-align:center;padding:110px 6vw 90px;background:linear-gradient(135deg,var(--pink),var(--plum));color:#fff;position:relative;overflow:hidden}
+.cta h2{font-size:clamp(2.3rem,6.5vw,4.8rem);line-height:1.05;margin-bottom:14px}
+.cta p{margin-bottom:30px;font-size:1.25rem}
+footer{text-align:center;padding:34px 5vw;font-size:.95rem}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.cat{opacity:1;transform:none}#ld{display:none}.hero h1 .d,.hero p,.hero .acts{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="ld"><div><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i></div>Kinder World</div>
+<div id="pg" aria-hidden="true"><b></b><span>🚂</span></div>
+<nav>
+  <a class="logo" href="#top" aria-label="Kinder World home">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="10" width="40" height="34" rx="10" fill="#ff5d8f"/><rect x="10" y="4" width="14" height="14" rx="4" fill="#ffc93c"/><rect x="26" y="6" width="12" height="12" rx="4" fill="#2ec4b6"/><circle cx="17" cy="28" r="3.5" fill="#fff"/><circle cx="31" cy="28" r="3.5" fill="#fff"/><path d="M16 36q8 7 16 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+    Kinder World
+  </a>
+  <ul><li><a href="#play">Play</a></li><li><a href="#shop">Shop</a></li><li><a href="#picks">Top picks</a></li><li><a href="#pop">Pop game</a></li></ul>
+  <a class="btn alt" href="#visit" style="padding:10px 20px;animation:none">Visit us</a>
+</nav>
+
+<header class="hero" id="top">
+  <svg class="sunw" viewBox="-100 -100 200 200" aria-hidden="true"><circle r="78" fill="none" stroke="#ffc93c" stroke-width="14" stroke-dasharray="5 21" stroke-linecap="round"/><circle r="56" fill="#ffc93c"/><circle cx="-18" cy="-8" r="5" fill="#3b1f66"/><circle cx="18" cy="-8" r="5" fill="#3b1f66"/><path d="M-20 12q20 20 40 0" stroke="#3b1f66" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+  <span class="cl" style="top:20%;animation-duration:50s">☁️</span>
+  <span class="cl" style="top:44%;font-size:3.5rem;animation-duration:38s;animation-delay:-20s">☁️</span>
+  <span class="fl" data-s=".25" style="left:6%;top:16%"><i>🧸</i></span>
+  <span class="fl" data-s=".5" style="right:26%;top:30%"><i style="--d:.6s">🚀</i></span>
+  <span class="fl" data-s=".35" style="left:10%;bottom:30%"><i style="--d:1s">🧩</i></span>
+  <span class="fl" data-s=".6" style="right:8%;bottom:34%"><i style="--d:.3s">🪁</i></span>
+  <span class="fl" data-s=".2" style="left:42%;top:8%"><i style="--d:1.4s">⭐</i></span>
+  <span class="fl" data-s=".45" style="left:3%;top:55%"><i style="--d:.9s">🎨</i></span>
+  <div class="in">
+    <h1 id="ttl" aria-label="Kinder World">Kinder<br>World</h1>
+    <p>Bright, safe toys that turn every little day into an adventure.</p>
+    <div class="acts"><a class="btn" href="#play">Start exploring</a> <a class="btn alt" href="#pop" style="margin-left:8px">Pop balloons</a></div>
+  </div>
+  <svg class="hills" viewBox="0 0 1440 300" preserveAspectRatio="none" aria-hidden="true"><path d="M0 120Q240 20 520 110T1060 90T1440 70V300H0Z" fill="#2ec4b6" opacity=".55"/><path d="M0 190Q300 110 620 180T1200 170T1440 150V300H0Z" fill="#2ec4b6"/></svg>
+  <div class="train" aria-hidden="true"><span>🚂</span><span style="animation-delay:.1s">🚃</span><span style="animation-delay:.2s">🚃</span><span style="animation-delay:.3s">🚃</span></div>
+  <div id="hb" style="position:absolute;inset:0;pointer-events:none;z-index:3"></div>
+</header>
+
+<div class="mqs" aria-hidden="true">
+  <div class="mq a"><div>🧸 Soft toys &nbsp; 🚗 Cars &nbsp; 🧩 Puzzles &nbsp; 🎨 Art kits &nbsp; 🚀 Space play &nbsp; 🎲 Board games &nbsp; 🧸 Soft toys &nbsp; 🚗 Cars &nbsp; 🧩 Puzzles &nbsp; 🎨 Art kits &nbsp; 🚀 Space play &nbsp; 🎲 Board games &nbsp;</div></div>
+  <div class="mq b"><div>⭐ New arrivals &nbsp; 🎁 Gift wrapping &nbsp; 🛡️ Child-safe &nbsp; 🌈 Happy kids &nbsp; ⭐ New arrivals &nbsp; 🎁 Gift wrapping &nbsp; 🛡️ Child-safe &nbsp; 🌈 Happy kids &nbsp; ⭐ New arrivals &nbsp; 🎁 Gift wrapping &nbsp; 🛡️ Child-safe &nbsp; 🌈 Happy kids &nbsp;</div></div>
+</div>
+
+<div class="story" id="play">
+  <div class="stage" id="stage">
+    <div id="sun">☀️</div><div id="stars"></div>
+    <div class="cloud" data-x="-50" style="left:8%;top:30%">☁️</div>
+    <div class="cloud" data-x="70" style="right:6%;top:52%">☁️</div>
+    <div class="cloud" data-x="-90" style="left:55%;top:76%;font-size:4rem">☁️</div>
+    <div class="bird" data-x="260" style="left:-4%;top:40%">🕊️</div>
+    <div class="bird" data-x="200" style="left:-8%;top:62%;font-size:1.8rem">🕊️</div>
+    <div id="bal">🎈</div>
+    <div class="cap" data-a="0" data-b=".3"><h2>Hop in, little explorer!</h2><p>Every toy at Kinder World starts a new adventure.</p></div>
+    <div class="cap" data-a=".33" data-b=".62"><h2>Toys picked for every age</h2><p>From first rattles to big-kid builders, all safety tested.</p></div>
+    <div class="cap n" data-a=".66" data-b="1.1"><h2>Sweet dreams, happy play</h2><p>Cuddly friends for bedtime stories. Keep scrolling to the toy shelf!</p></div>
+  </div>
+</div>
+
+<section class="pad" id="shop">
+  <h2 class="t">What do you want to play today?</h2>
+  <p class="sub">Four happy corners, one big smile.</p>
+  <div class="grid">
+    <a class="cat" style="--c:#ffb0c8;--d:0s" href="#picks"><em>🧸</em><h3>Cuddly friends</h3><p>Soft, huggable, washable.</p></a>
+    <a class="cat" style="--c:var(--sky);--d:.15s" href="#picks"><em>🚗</em><h3>Wheels &amp; rockets</h3><p>Zoom, vroom, blast off.</p></a>
+    <a class="cat" style="--c:#9ee8df;--d:.3s" href="#picks"><em>🧩</em><h3>Brainy puzzles</h3><p>Build, match, solve.</p></a>
+    <a class="cat" style="--c:var(--sun);--d:.45s" href="#picks"><em>🎨</em><h3>Art &amp; craft</h3><p>Colours, clay, glitter.</p></a>
+  </div>
+</section>
+
+<div class="hpin" id="picks">
+  <div class="hst">
+    <h2>Top picks this week</h2>
+    <div class="track" id="track">
+      <div class="toy"><em style="--d:0s">🐻</em><h3>Honey Bear</h3><p>Super-soft plush</p><b>0–3 yrs</b></div>
+      <div class="toy"><em style="--d:.4s">🚂</em><h3>Choo-Choo Set</h3><p>Wooden train and tracks</p><b>3+ yrs</b></div>
+      <div class="toy"><em style="--d:.8s">🚀</em><h3>Moon Rocket</h3><p>Lights and sounds</p><b>4+ yrs</b></div>
+      <div class="toy"><em style="--d:1.2s">🧱</em><h3>Big Blocks</h3><p>Build anything</p><b>3+ yrs</b></div>
+      <div class="toy"><em style="--d:1.6s">🦄</em><h3>Rainbow Unicorn</h3><p>Ride-on fun</p><b>2+ yrs</b></div>
+      <div class="toy"><em style="--d:2s">🎲</em><h3>Family Games</h3><p>Play together</p><b>5+ yrs</b></div>
+    </div>
+  </div>
+</div>
+
+<section class="pad" id="pop">
+  <h2 class="t">Pop the balloons!</h2>
+  <p class="sub" style="margin-bottom:26px">Tap or click the balloons as they float up.</p>
+  <div class="game" id="game"><div class="sc">Popped: <span id="sc">0</span></div></div>
+  <p id="msg" aria-live="polite"></p>
+</section>
+
+<section class="pad" style="padding-top:0">
+  <h2 class="t">Happy numbers</h2>
+  <p class="sub">Little smiles add up.</p>
+  <div class="stats">
+    <div><strong data-n="5000">0</strong>happy kids</div>
+    <div><strong data-n="1200">0</strong>toys on our shelves</div>
+    <div><strong data-n="100">0</strong>% child-safe materials</div>
+    <div><strong data-n="12">0</strong>years of fun</div>
+  </div>
+</section>
+
+<section class="pad" style="padding-top:0">
+  <h2 class="t">Parents love us too</h2>
+  <p class="sub" style="margin-bottom:30px">Sample reviews. Replace with real ones.</p>
+  <div class="grid">
+    <div class="rev" style="--c:var(--pink)">“My daughter refused to leave the shop. We left with a unicorn.”<br><b>Anjali, mum of a 4-year-old</b></div>
+    <div class="rev" style="--c:var(--sun)">“Great quality and everything is clearly labelled by age.”<br><b>Rahim, dad of twins</b></div>
+    <div class="rev" style="--c:var(--teal)">“The staff let my son try every puzzle. So kind.”<br><b>Divya, mum of a 6-year-old</b></div>
+  </div>
+</section>
+
+<section class="cta" id="visit">
+  <h2>Come and play with us!</h2>
+  <p>Visit Kinder World today. Your child's next favourite toy is waiting.</p>
+  <button class="btn alt" id="party">Celebrate! 🎉</button>
+</section>
+<footer>© Kinder World. Made with colour and giggles. Demo page.</footer>
+
+<script>
+var $=function(s){return document.querySelectorAll(s)},G=function(i){return document.getElementById(i)},cl=function(v,a,b){return Math.max(a,Math.min(b,v))};
+var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,mx=0,my=0,tk=false;
+setTimeout(function(){G('ld').classList.add('go')},reduce?0:1300);
+// title letters
+var k=0;G('ttl').innerHTML=['Kinder','World'].map(function(w){return w.split('').map(function(c){return '<span class="d" style="--i:'+(k++)+'"><i>'+c+'</i></span>'}).join('')}).join('<br>');
+// stars
+for(var i=0;i<30;i++){var b=document.createElement('b');b.textContent=i%3?'✦':'⭐';b.style.cssText='left:'+Math.random()*96+'%;top:'+Math.random()*80+'%;--d:'+Math.random()*2+'s';G('stars').appendChild(b)}
+// confetti + sparkles
+function confetti(x,y,n){if(reduce)return;var E=['🎉','🎈','⭐','🧸','🌈','🍭'];for(var i=0;i<n;i++){var s=document.createElement('span');s.className='cf';s.textContent=E[i%6];s.style.left=x+'px';s.style.top=y+'px';document.body.appendChild(s);var a=Math.random()*6.28,d=100+Math.random()*240;s.animate([{transform:'translate(0,0) scale(.5)',opacity:1},{transform:'translate('+Math.cos(a)*d+'px,'+(Math.sin(a)*d+180)+'px) rotate('+Math.random()*540+'deg) scale(1.2)',opacity:0}],{duration:1200+Math.random()*800,easing:'cubic-bezier(.2,.8,.4,1)'}).onfinish=(function(n){return function(){n.remove()}})(s)}}
+var lastSp=0;
+function spark(e){var t=performance.now();if(t-lastSp<55)return;lastSp=t;var s=document.createElement('span');s.className='sp';s.textContent=['✨','⭐','💫'][Math.random()*3|0];s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';document.body.appendChild(s);s.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:'translate('+(Math.random()*40-20)+'px,34px) scale(0)',opacity:0}],{duration:700}).onfinish=function(){s.remove()}}
+// balloons
+var HUES=[0,40,150,200,300];
+function balloon(box,pop){var b=document.createElement('button');b.className='bl';b.setAttribute('aria-label','Pop balloon');b.textContent='🎈';b.style.cssText='left:'+Math.random()*90+'%;font-size:'+(2.6+Math.random()*2.4)+'rem;filter:hue-rotate('+HUES[Math.random()*5|0]+'deg);animation-duration:'+(7+Math.random()*5)+'s;pointer-events:auto';b.onclick=function(){var r=b.getBoundingClientRect();confetti(r.left+r.width/2,r.top+r.height/2,14);b.remove();if(pop)pop()};b.onanimationend=function(){b.remove()};box.appendChild(b)}
+var hb=G('hb'),gm=G('game'),score=0,gv=false;
+hb.style.setProperty('--h',hb.offsetHeight+'px');gm.style.setProperty('--h',gm.offsetHeight+'px');
+if(!reduce){setInterval(function(){if(scrollY<innerHeight&&hb.children.length<6)balloon(hb)},1700);
+setInterval(function(){if(gv&&gm.children.length<9)balloon(gm,function(){score++;G('sc').textContent=score;if(score%10===0)G('msg').textContent='🎉 '+score+' popped! Show this at the shop for a surprise (demo message).'})},650)}
+new IntersectionObserver(function(e){gv=e[0].isIntersecting},{threshold:.2}).observe(gm);
+// reveal, counters
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.2});
+$('.cat').forEach(function(c){io.observe(c);c.addEventListener('pointermove',function(e){if(!c.classList.contains('in'))return;var r=c.getBoundingClientRect();c.style.transition='transform .1s';c.style.transform='rotateX('+(-((e.clientY-r.top)/r.height-.5)*18)+'deg) rotateY('+(((e.clientX-r.left)/r.width-.5)*18)+'deg) scale(1.05)'});c.addEventListener('pointerleave',function(){c.style.transition='';c.style.transform=''})});
+var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;cio.unobserve(e.target);var n=+e.target.dataset.n,t0=performance.now();(function f(t){var p=cl((t-t0)/1600,0,1);e.target.textContent=Math.round(n*(1-Math.pow(1-p,3))).toLocaleString();if(p<1)requestAnimationFrame(f)})(t0)})},{threshold:.6});
+$('[data-n]').forEach(function(s){cio.observe(s)});
+// scroll-driven scenes
+var C=[[143,214,255],[255,155,184],[42,26,94]];
+function mix(a,b,t){return a.map(function(v,i){return Math.round(v+(b[i]-v)*t)})}
+var story=document.querySelector('.story'),stage=G('stage'),bal=G('bal'),sun=G('sun'),caps=$('.cap'),clouds=$('.cloud,.bird'),hp=G('picks'),track=G('track'),fl=$('.fl'),hills=document.querySelector('.hills'),pgb=document.querySelector('#pg b'),pgs=document.querySelector('#pg span');
+function frame(){tk=false;var vh=innerHeight,y=scrollY;
+ var tot=document.documentElement.scrollHeight-vh,pr=cl(y/tot,0,1)*100;pgb.style.width=pr+'%';pgs.style.left=pr+'%';
+ fl.forEach(function(f){var s=+f.dataset.s;f.style.transform='translate3d('+(mx*s*80)+'px,'+(-y*s+my*s*80)+'px,0) rotate('+(y*.04)+'deg)'});
+ hills.style.transform='translateY('+(y*.12)+'px)';
+ var r=story.getBoundingClientRect(),p=cl(-r.top/(r.height-vh),0,1),col=p<.5?mix(C[0],C[1],p*2):mix(C[1],C[2],(p-.5)*2);
+ stage.style.background='linear-gradient(180deg,rgb('+col+'),rgb('+mix(col,[255,247,234],.3*(1-p))+'))';
+ bal.style.transform='translate(-50%,'+(vh*.4-p*vh*1.05)+'px) rotate('+Math.sin(p*16)*9+'deg)';
+ sun.style.transform='translateY('+(p*vh*.9)+'px) scale('+(1-p*.4)+')';sun.style.opacity=1-p*1.4;
+ G('stars').style.opacity=cl((p-.55)*3,0,1);
+ clouds.forEach(function(c){c.style.transform='translateX('+(c.dataset.x*p*(c.className==='bird'?5:6))+'px)'});
+ caps.forEach(function(c){var a=+c.dataset.a,b=+c.dataset.b,m=(a+b)/2,o=cl(1-Math.abs(p-m)/((b-a)/2)*1.1,0,1);c.style.opacity=Math.min(1,o*2.2);c.style.transform='translateY('+((p-m)*-170)+'px) scale('+(.85+Math.min(o,1)*.15)+')'});
+ var h=hp.getBoundingClientRect(),hq=cl(-h.top/(h.height-vh),0,1);track.style.transform='translateX('+(-hq*(track.scrollWidth-innerWidth+20))+'px)';
+ $('.toy').forEach(function(t){var q=t.getBoundingClientRect(),c=(q.left+q.width/2-innerWidth/2)/innerWidth;t.style.transform='scale('+(1-Math.min(Math.abs(c),.6)*.35)+') rotate('+(c*-9)+'deg)'});
+}
+function req(){if(!tk){tk=true;requestAnimationFrame(frame)}}
+if(!reduce){addEventListener('scroll',req,{passive:true});addEventListener('resize',req);addEventListener('pointermove',function(e){mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;if(e.pointerType==='mouse')spark(e);req()})}
+frame();
+G('party').onclick=function(e){confetti(e.clientX,e.clientY,40)};
+</script>
+</body>
+</html>
